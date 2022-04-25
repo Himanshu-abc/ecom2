@@ -1,0 +1,37 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Login</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/login_page/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/login_page/signin.css' %}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+<form class="form-signin" method="post" action="">
+    {% csrf_token %}
+    <img src="{% static 'images/login_logo.jpg' %}">
+    <h6>Please sign in</h6>
+    <label for="username" class="sr-only">Username</label>
+    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+    <a href="{% url 'register' %}" class="btn btn-sm btn-secondary btn-block">Sign up</a>
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %}
+</form>
+</body>
+</html>

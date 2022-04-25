@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All_User_orders</title>
+</head>
+<body>
+{% block content%}
+<div class="row">
+    <div class="col-md-12">
+        <h5>{{current_user}} -- All Orders</h5>
+        <hr>
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Sr. no</th>
+                    <th>Order Date</th>
+                    <th>Order Placed</th>
+                    <th>Order Items</th>
+                    <th>Invoice</th>
+                    <th>Delivered</th>
+                </tr>
+
+                {% for order in orders %}
+                <tr>
+                    <td>{{ forloop.counter }}.</td>
+                    <td>{{ order.date_ordered |date:"D, d M, Y" }}</td>
+                    <td>{{ order.completed }}</td>
+                    <td>{% for item in order.orderitem_set.all %}
+                        <img src="{{ item.product.image.url }}" width="60" height="40">
+                        {{item.product.product_name}}<br>
+                        {% endfor %}
+                    </td>
+                    {% if order.invoice %}
+                    <td><a style="text-decoration:none" href="{% url 'view_invoice' order.id %}">View invoice </a>/
+                    <br>
+                        <a style="text-decoration:none" href="{% url 'download_invoice' order.id %}">Download</a>
+                    </td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+<!--                    <td>{{order.invoice}}</td>-->
+                    <td>{{ order.delivered }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+</body>
+</html>

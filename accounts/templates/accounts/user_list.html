@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" http-equiv="refresh" content="5">
+    <title>Create Coupons</title>
+</head>
+<body>
+{% block content%}
+
+<div class="row">
+    <div class="col-md-12">
+        <h4 style="color:red;" align="center">Common coupons</h4>
+        <hr>
+        <p align="center">
+            <a class="btn btn-sm btn-info" href="{% url 'create_coupon' 'all' %}">Create Common Coupon</a>
+        </p>
+
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Sr. no.</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Allowed Above</th>
+                    <th>Start Date</th>
+                    <th>Expire Date</th>
+                    <th>Expired</th>
+                    <th>Discount %</th>
+                </tr>
+
+                {% for coupon in coupons %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{coupon}}</td>
+                    <td>{{coupon.coupon_code}}</td>
+                    <td>{{coupon.allowed_above}}</td>
+                    <td>{{coupon.start_on}}</td>
+                    <td>{{coupon.expire_on}}</td>
+                    <td>{{coupon.is_expired}}</td>
+                    <td>{{coupon.discount}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4 style="color:red;" align="center">Individual coupons for users</h4>
+        <hr>
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Sr. no.</th>
+                    <th>Users</th>
+                    <th>Create coupon</th>
+                </tr>
+
+                {% for user in users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'create_coupon' user %}">Create Coupon</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

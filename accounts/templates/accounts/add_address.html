@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>add_address</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card card-body">
+            <a class="btn btn-warning" href="{% url 'account_setting' %}"> &#8592; Back to settings</a>
+            <hr>
+            <img class="profile-pic" src="{% static 'images/address.png' %}">
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card card-body">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <!--                                {% for i in form%}-->
+                <!--                                <div class="row mb-3">-->
+                <!--                                    <label class="col-sm-3 col-form-label">{{i.label}}: </label>-->
+                <!--                                    <div class="col-sm-6">-->
+                <!--                                        {{i}}-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                                {% endfor %}-->
+                <!--                                <input class="btn btn-primary" type="submit" name="Update Information" value="Add Address">-->
+
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">{{form.address.label}}: </label>
+                    <div class="col-sm-6">
+                        {{form.address}}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">{{form.country.label}}: </label>
+                    <div class="col-sm-6">
+                        <select class="form-select" id="country" name="country">
+                            <option value='{{form.country}}' name="country">Country</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">{{form.state.label}}: </label>
+                    <div class="col-sm-6">
+                        <select class="form-select" id="state" name="state">
+                            <option value='{{form.state}}' name="state">State</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">{{form.zipcode.label}}: </label>
+                    <div class="col-sm-6">
+                        <select class="form-select" id="city" name="city">
+                            <option name="city" value='{{form.city}}'>City</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">{{form.zipcode.label}}: </label>
+                    <div class="col-sm-6">
+                        {{form.zipcode}}
+                    </div>
+                </div>
+                <input class="btn btn-primary" type="submit" name="Update Information" value="Add Address">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

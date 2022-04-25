@@ -1,0 +1,5 @@
+django==2.2.12
+gunicorn==20.0.4
+pillow==9.1.0
+aspose_words==22.4.0
+xhtml2pdf==0.2.7

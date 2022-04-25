@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Coupon</title>
+</head>
+<body>
+{% block content %}<br>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card card-body">
+            <a class="btn btn-warning" href="{% url 'users_list' %}"> &#8592; Back</a>
+            <hr>
+            <img class="profile-pic" src="{% static 'images/coupon_logo.png' %}">
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card card-body">
+
+            <form method="POST">
+                {% csrf_token %}
+                {% for i in form %}
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">{{i.label}}: </label>
+                    <div class="col-sm-6">
+                        {{i}}
+                    </div>
+                </div>
+                {% endfor %}
+                <input class="btn btn-primary" type="submit" name="Update Information" value="create coupon">
+            </form>
+        </div>
+    </div>
+    {% if not user_name|lower == 'all'%}
+    <div class="col-md-4">
+        <div class="card card-body">
+            <h5 align="center" style="color:red;">{{user_name|upper}} coupons</h5>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        Sr.
+                    </div>
+                    <div class="col-sm">
+                        name
+                    </div>
+                    <div class="col-sm">
+                        expired
+                    </div>
+                    <div class="col-sm">
+                        off %
+                    </div>
+                </div>
+                <br>
+                {% for coupon in coupons %}
+                <div class="row">
+                    <div class="col-sm">
+                        {{forloop.counter}}.
+                    </div>
+                    <div class="col-sm">
+                        {{coupon.coupon_name}}
+                    </div>
+                    <div class="col-sm">
+                        {{coupon.is_expired}}
+                    </div>
+                    <div class="col-sm">
+                        {{coupon.discount}}
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+</body>
+</html>

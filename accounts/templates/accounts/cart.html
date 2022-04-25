@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+</head>
+<body>
+{% block content%}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <hr>
+        <div class="card card-body">
+            <div align="center">
+                <a class="btn col-md-3 btn-warning align-self-left" href="{% url 'store' %}">&#8592; Back to
+                    Shopping</a>
+                <a class="btn col-md-3 btn-success align-self-end" href="{% url 'checkout' %}">Proceed To
+                    checkout &#8594; </a><br>
+            </div>
+            <div align="center">
+                <br>
+                <div class="d-inline p-2 bg-secondary text-white">Total Cart Quantity: {{cart_quantity}}</div>
+                <div class="d-inline p-2 bg-secondary text-white">Cart Total Price: {{ cart_total|floatformat:2 }}</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <hr>
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Product Icon</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Add</th>
+                    <th>Remove</th>
+                    <th>Delete</th>
+                    <th>Total Price</th>
+                </tr>
+                {% for item in items %}
+                <tr>
+                    <td><img src="{{ item.product.image.url }}" width="70" height="50"></td>
+                    <td>{{ item.product.product_name }}</td>
+                    <td>{{ item.product.price }}</td>
+                    <td>x {{ item.quantity }}</td>
+                    <td>
+                        <button type="button" data-product_id="{{item.product.id}}" data-product_action="add"
+                                class="btn btn-sm btn-info update-cart">Add
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-product_id="{{item.product.id}}" data-product_action="remove"
+                                class="btn btn-sm btn-warning update-cart">Remove
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" data-product_id="{{item.product.id}}" data-product_action="delete"
+                                class="btn btn-sm btn-danger update-cart">Delete
+                        </button>
+                    </td>
+                    <td>{{ item.getTotal|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+</body>
+</html>

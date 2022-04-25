@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>product add</title>
+</head>
+<body>
+{% block content %}<br>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-9">
+        <div class="card card-body">
+
+            <form method="POST" enctype="multipart/form-data" , action="">
+                {% csrf_token %}
+                {{ form.management_form }}
+                {% for field in form %}
+                <h5 style="color:red;">Product: {{ forloop.counter }}</h5>
+                <p>
+                    {% for i in field%}
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">{{i.label}}: </label>
+                    <div class="col-sm-6">
+                        {{i}}
+                    </div>
+                </div>
+                {% endfor %}
+                </p>
+                <hr>
+                {% endfor %}
+                <input class="btn btn-primary" type="submit" name="Update Information" value="save product">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

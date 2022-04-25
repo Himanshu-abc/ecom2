@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Address</title>
+</head>
+<body>
+{% block content %}<br>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-9">
+        <div class="card card-body">
+
+            <form method="post">
+                {% csrf_token %}
+
+                <fieldset class="row mb-3">
+                    <legend>Select a default address: </legend>
+                    <legend class="col-form-label col-sm-2 pt-0">Address</legend>
+                    <div class="col-sm-10">
+                        {% for i in address %}
+                        <div class="form-check">
+                            <label class="form-check-label" for="address">
+                                {{i}}
+                            </label>
+                            <input class="form-check-input" type="radio" name="address" id="address"
+                                   value="{{i.id}}" checked>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+
+
+<!--                <label>Select a default address: </label><br>-->
+<!--                <select name="address" id="address">-->
+<!--                    {% for i in address %}-->
+<!--                    <option value="{{i.id}}">{{i}}</option>-->
+<!--                    {% endfor %}-->
+<!--                </select><br><br>-->
+                <input class="btn btn-primary" type="submit" name="Update Information" value="select">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

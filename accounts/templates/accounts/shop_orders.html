@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" http-equiv="refresh" content="5" >
+    <title>All Shop Orders</title>
+</head>
+<body>
+{% block content%}
+<div class="row">
+    <div class="col-md-12">
+        <h4 style="color:red;" align="center">All Orders placed on {{shop_name}}</h4>
+        <hr>
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Sr. no.</th>
+                    <th>Order id</th>
+                    <th>Order Date</th>
+                    <th>Placed by</th>
+                    <th>Product Name</th>
+                    <th>Product Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+
+                {% for record in records %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ record.order_id }}</td>
+                    <td>{{ record.order_date }}</td>
+                    <td>{{ record.user }}</td>
+                    <td>{{ record.product_name }}</td>
+                    <td>{{ record.price }}</td>
+                    <td>{{ record.quantity }}</td>
+                    <td>{{ record.product_total }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create tag</title>
+</head>
+<body>
+{% block content %}<br>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <form method="POST" action="">
+                {% csrf_token %}
+                {% for i in form%}
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">{{i.label}}: </label>
+                    <div class="col-sm-6">
+                        {{i}}
+                    </div>
+                </div>
+                {% endfor %}
+                <input class="btn btn-primary" type="submit" name="Update Information" value="create tag">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

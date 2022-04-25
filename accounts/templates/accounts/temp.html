@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>product add</title>
+</head>
+<body>
+{% block content %}<br>
+
+user details: <br>
+{{invoice.content_object}}<br>
+{{invoice.name}}<br>
+{{invoice.phone}}<br>
+{{invoice.email}}<br><br>
+
+
+shipping information: <br>
+{{invoice.address}}<br>
+{{invoice.city}}<br>
+{{invoice.state}}<br>
+{{invoice.zipcode}}<br>
+{{invoice.country}}<br>
+{{invoice.order.date_ordered}}<br><br>
+
+products:<br>
+{% for item in invoice.order.orderitem_set.all%}
+{{item.product.product_name}}<br>
+{{item.product.price}}<br>
+{{item.quantity}}<br>
+{% endfor %}<br>
+
+quantity and agreed price: <br>
+cart total quantity: {{invoice.order.getCartQuantity}}<br>
+cart total price: {{invoice.order.getCartTotal}}<br><br>
+
+{% endblock %}
+</body>
+</html>
+
+
+
+
+
+
+
+

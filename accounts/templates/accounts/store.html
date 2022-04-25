@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>store</title>
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/store/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/store/store.css' %}" rel="stylesheet">
+</head>
+<body>
+{% block javascript %}
+{% endblock javascript %}
+
+{% block content %}
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Welcome To Store</h1>
+            <p class="lead text-muted">One stop centre for shopping !!</p>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container" id="product">
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" src="{{product.image.url}}" width="300" height="210"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <strong><p class="card-text text-dark">{{product.product_name}}</p></strong>
+                            <hr>
+                            <p class="text-muted text-truncate">{{product.description}}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-primary"><a
+                                            style="text-decoration:none"
+                                            href=" {% url 'product_view' product.id %}">View</a></button>
+                                    <button type="button" data-product_id="{{product.id}}" data-product_action="add"
+                                            class="btn btn-outline-primary btn-sm update-cart">Add to
+                                        Cart
+                                    </button>
+                                </div>
+                                <strong class="card-text">$ {{product.price}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</main>
+{% for message in messages %}
+<h3><p align="center">{{message}}</p></h3>
+{% endfor %}
+
+{% endblock content%}
+</body>
+</html>

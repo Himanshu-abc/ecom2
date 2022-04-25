@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shopkeeper_navbar</title>
+</head>
+<body>
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-warning">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{%url 'shop_orders' %}">Shop Orders</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{%url 'product_add' %}">Add a Product</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{%url 'product_all' %}">Display My Products</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{%url 'product_multiple_add' %}">Add Multiple Products</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{%url 'create_tag' %}">Create a Product Tag</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{%url 'users_list' %}">Create coupons</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}
+</body>
+</html>

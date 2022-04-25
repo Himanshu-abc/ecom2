@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% extends 'accounts/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>product view</title>
+</head>
+<body>
+{% block content %}<br>
+<div class="row">
+    <div class="col-md-5">
+        <h5 align="center">{{product.product_name}}</h5>
+        <hr>
+        <div class="card card-body">
+            <p class="text-center bg-info rounded">Product Image</p>
+            <img src="{{ product.image.url }}" width="390" height="300">
+            <button type="button" data-product_id="{{product.id}}" data-product_action="add"
+                    class="btn btn-outline-success btn-sm update-cart">Add to
+                Cart
+            </button>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <hr>
+        <div class="card card-body">
+            <h5 class="bg-info" align="center">Product Information</h5>
+            <hr>
+
+
+            <div class="row mb-3">
+                <label class="col-sm-3">Product Name: </label>
+                <div class="col-sm-9">
+                    {{product.product_name}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3">Price: </label>
+                <div class="col-sm-9">
+                    {{product.price}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3">Available: </label>
+                <div class="col-sm-9">
+                    {{product.available}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3">Digital: </label>
+                <div class="col-sm-9">
+                    {{product.digital}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3">Date Added: </label>
+                <div class="col-sm-9">
+                    {{product.date_added}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3">Description: </label>
+                <div class="col-sm-9">
+                    {{product.description}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3">Shopkeeper: </label>
+                <div class="col-sm-9">
+                    {{product.shopkeeper}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3">Shop Name: </label>
+                <div class="col-sm-9">
+                    {{product.shop_name}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3">Shop Address: </label>
+                <div class="col-sm-9">
+                    {{product.shopkeeper.shop_address}}
+                </div>
+            </div>
+
+<!--            <p>Product Name: {{product.product_name}}</p>-->
+<!--            <p>Price: {{product.price}}</p>-->
+<!--            <p>Available: {{product.available}}</p>-->
+<!--            <p>Digital: {{product.digital}}</p>-->
+<!--            <p>Date Added: {{product.date_added}}</p>-->
+<!--            <p>Description: {{product.description}}</p>-->
+<!--            <p>Shopkeeper: {{product.shopkeeper}}</p>-->
+<!--            <p>Shop Name: {{product.shopkeeper.shop_name}}</p>-->
+<!--            <p>Shop Address: {{product.shopkeeper.shop_address}}</p>-->
+        </div>
+    </div>
+
+</div>
+</form>
+{% endblock %}
+</body>
+</html>
