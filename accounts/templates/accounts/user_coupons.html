@@ -28,6 +28,7 @@
                     <th>Expire Date</th>
                     <th>Expired</th>
                     <th>Discount %</th>
+                    <th>Used</th>
                 </tr>
 
                 {% for coupon in coupons %}
@@ -41,6 +42,7 @@
                     <td>{{coupon.expire_on}}</td>
                     <td>{{coupon.is_expired}}</td>
                     <td>{{coupon.discount}}</td>
+                    <td>{{coupon.used}}</td>
                 </tr>
                 {% endif %}
                 {% endfor %}

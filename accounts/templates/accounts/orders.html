@@ -34,18 +34,16 @@
                         {% endfor %}
                     </td>
                     {% if order.invoice %}
-                    <td><a style="text-decoration:none" href="{% url 'view_invoice' order.id %}">View invoice </a>/
+                    <td><a style="text-decoration:none" href="{% url 'view_invoice' order.id %}">View invoice </a>
                     <br>
                         <a style="text-decoration:none" href="{% url 'download_invoice' order.id %}">Download</a>
                     </td>
                     {% else %}
                     <td></td>
                     {% endif %}
-<!--                    <td>{{order.invoice}}</td>-->
                     <td>{{ order.delivered }}</td>
                 </tr>
                 {% endfor %}
-
             </table>
         </div>
     </div>

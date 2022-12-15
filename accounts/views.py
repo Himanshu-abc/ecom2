@@ -3,6 +3,7 @@ import os
 import datetime
 import aspose.words as aw
 import mimetypes
+import re
 
 from io import BytesIO
 from django.template.loader import get_template
@@ -374,26 +375,25 @@ def process_order(request):
     current_user = data1['current_user']
 
     total = float(data['form']['total'])
-    if total == order.getCartTotal:
-        order.completed = True
-        order.save()
+
+    # total_inside = (order.getCartTotal + order.getTax)
+    # total_inside = float("%.2f" % total_inside)
+    # print('total_inside', total_inside)
+    # if total == total_inside:
+
     order.completed = True
+    order.save()
+    print("all ok here")
+
+    # order.completed = True
     order.delivered = True
     order.save()
 
-    Invoice.objects.create(
-        content_object=current_user,
-        order=order,
-        date=datetime.date.today(),
-        name=data['form']['name'],
-        email=data['form']['email'],
-        phone=data['form']['phone'],
-        address=data['shipping']['address'],
-        city=data['shipping']['city'],
-        state=data['shipping']['state'],
-        zipcode=data['shipping']['zipcode'],
-        country=data['shipping']['country'],
-    )
+    Invoice.objects.create(content_object=current_user, order=order, date=datetime.date.today(),
+                           name=data['form']['name'], email=data['form']['email'], phone=data['form']['phone'],
+                           address=data['shipping']['address'], city=data['shipping']['city'],
+                           state=data['shipping']['state'], zipcode=data['shipping']['zipcode'],
+                           country=data['shipping']['country'], )
     print('object created')
 
     return JsonResponse('Payment submitted....', safe=False)
@@ -433,7 +433,12 @@ def categories(request, tag):
 @csrf_exempt
 def search2(request):
     query = request.GET.get("search_query")
-    products = Product.objects.filter(product_name__icontains=query)
+    # products = Product.objects.filter(product_name__icontains=query)
+
+    text = query
+    text = re.escape(text)  # make sure there are no regex specials
+    products = Product.objects.filter(product_name__iregex=r"(^|\s)%s" % text)
+
     data = cartData(request)
     cart_quantity = data['cart_quantity']
     if len(products) == 0:
@@ -537,7 +542,7 @@ def download_invoice(request, pk):
     pdf = render_to_pdf(path1, context)
 
     response = HttpResponse(pdf, content_type='application/force-download')
-    filename = "Invoice_" + str(pk) + "_%s.pdf" % str(datetime.datetime.now())
+    filename = "Invoice_" + str(pk) + "_%s.pdf" % str(datetime.datetime.now().replace(microsecond=0))
     content = "attachment; filename='%s'" % filename
     response['Content-Disposition'] = content
     return response
@@ -612,36 +617,34 @@ def apply_coupon(request):
 
     # coupons = Coupon.objects.filter(created_for=str(current_user))
     coupons = Coupon.objects.filter(Q(created_for=str(current_user)) | Q(created_for=None))
-    is_applied = 'NO'
+    is_applicable = 'NO'
 
     for coupon in coupons:
         if coupon.coupon_code == code:
-            if not coupon.is_expired():
-                is_applied = 'YES'
+            if not coupon.is_expired() and coupon.used is False:
+                is_applicable = 'YES'
                 break
 
-    print(order.final_amount)
-    if is_applied == 'YES':
-        discount = coupon.discount
-        final_value = order.netAfterCoupon(discount)
-
+    if is_applicable == 'YES':
+        # -1 for coupon not applicable cause cart total below coupon offer limit
         if order.netAfterCoupon(0) < coupon.allowed_above:
             final_value = -1
+        else:
+            discount = coupon.discount
+            final_value = order.netAfterCoupon(discount)
+            coupon.used = True
+            coupon.save()
 
-        print(final_value)
-
-    if is_applied == 'NO':
-        # final_value = order.netAfterCoupon(0)
+    # 0 means coupon code not found or coupon expired
+    if is_applicable == 'NO':
         final_value = 0
-
-        print(final_value)
 
     final_value = round(final_value, 2)
     order.final_amount = final_value
     order.save()
     print(order.final_amount)
 
-    data = {'final_value': order.final_amount, 'is_applied': is_applied}
+    data = {'final_value': order.final_amount, 'is_applied': is_applicable}
     return JsonResponse(data, safe=False)
 
 
@@ -652,3 +655,4 @@ def temp(request):
         print(i.creator_name)
     context = {}
     return render(request, 'accounts/temp.html', context)
+

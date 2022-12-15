@@ -1,5 +1,4 @@
 import datetime
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -59,12 +58,14 @@ class Order(models.Model):
         orderItems = self.orderitem_set.all()
         for item in orderItems:
             total += item.getTotal
+            total = float("%.2f" % total)
         return total
 
     @property
     def getTax(self):
         total = self.getCartTotal
         tax = total * (12 / 100)
+        tax = float("%.2f" % tax)
         return tax
 
     @property
@@ -114,17 +115,17 @@ class Invoice(models.Model):
     order = models.OneToOneField(Order, on_delete=models.SET_NULL, blank=True, null=True)
 
     # user info
-    name = models.CharField(max_length=100, null=True, blank=True)
-    email = models.CharField(max_length=100, null=True, blank=True)
-    phone = models.CharField(max_length=20, null=True, blank=True)
+    name = models.CharField(max_length=100, null=True, blank=False)
+    email = models.CharField(max_length=100, null=True, blank=False)
+    phone = models.CharField(max_length=20, null=True, blank=False)
 
     # shipping info
-    address = models.CharField(max_length=200, null=True, blank=True)
-    city = models.CharField(max_length=50, null=True, blank=True)
-    state = models.CharField(max_length=50, null=True, blank=True)
-    country = models.CharField(max_length=50, null=True, blank=True)
-    zipcode = models.PositiveIntegerField(null=True, blank=True)
-    date = models.DateField(auto_created=True, null=True, blank=True)
+    address = models.CharField(max_length=200, null=True, blank=False)
+    city = models.CharField(max_length=50, null=True, blank=False)
+    state = models.CharField(max_length=50, null=True, blank=False)
+    country = models.CharField(max_length=50, null=True, blank=False)
+    zipcode = models.PositiveIntegerField(null=True, blank=False)
+    date = models.DateField(auto_created=True, null=True, blank=False)
 
     def __str__(self):
         return str(self.id)
@@ -156,6 +157,7 @@ class Coupon(models.Model):
     expire_on = models.DateField(help_text='coupon end date')
     discount = models.DecimalField(help_text='please enter discount percentage %', max_digits=3, decimal_places=0,
                                    default=decimal.Decimal(0), validators=PERCENTAGE_VALIDATOR)
+    used = models.BooleanField(default=False)
 
     def __str__(self):
         return self.coupon_name
